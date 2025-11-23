@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
 @Controller('profiles')
 // GET /profiles
@@ -8,8 +8,9 @@ import { Controller, Get } from '@nestjs/common';
 // DELETE /profiles/:id
 export class ProfilesController {
     @Get()
-    findAll(): any[] {
+    // defining that the endpoint can take the query parameter age (baseUrl/profiles?age=25)
+    findAll(@Query("age") age: number): any[] {
         // return 'This action returns all profiles';
-        return [];
+        return [{age}];
     }
 }
