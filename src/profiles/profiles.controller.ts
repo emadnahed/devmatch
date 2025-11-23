@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Post, Query, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { ProfilesService } from './profiles.service';
 
 @Controller('profiles')
 // GET /profiles
@@ -9,12 +10,17 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 // PUT /profiles/:id
 // DELETE /profiles/:id
 export class ProfilesController {
+    constructor(private readonly profilesService: ProfilesService) { }
+    // @Get()
+    // // defining that the endpoint can take the query parameter age, query is optional
+    // // (baseUrl/profiles?age=25)
+    // findAll(@Query("age") age: number): any[] {
+    //     // return 'This action returns all profiles';
+    //     return [{ age }];
+    // }
     @Get()
-    // defining that the endpoint can take the query parameter age, query is optional
-    // (baseUrl/profiles?age=25)
-    findAll(@Query("age") age: number): any[] {
-        // return 'This action returns all profiles';
-        return [{ age }];
+    findAll() {
+        return this.profilesService.findAll();
     }
 
 
