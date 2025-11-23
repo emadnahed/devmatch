@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Post, Query, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Body, Put } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Controller('profiles')
 // GET /profiles
@@ -13,7 +14,7 @@ export class ProfilesController {
     // (baseUrl/profiles?age=25)
     findAll(@Query("age") age: number): any[] {
         // return 'This action returns all profiles';
-        return [{age}];
+        return [{ age }];
     }
 
 
@@ -21,9 +22,9 @@ export class ProfilesController {
     // defining that the endpoint can take the param id, param is required
     // (baseUrl/profiles/1)
     findOne(@Param("id") id: string): any {
-        return {id};
+        return { id };
     }
-    
+
 
     @Post()
     Create(@Body() createProfileDto: CreateProfileDto) {
@@ -34,5 +35,23 @@ export class ProfilesController {
             isMarried: createProfileDto.isMarried
         };
     }
+
+    @Put(':id')
+    update(
+        @Param('id') id: string,
+        @Body() updateProfileDto: UpdateProfileDto,
+    ) {
+        return {
+            id,
+            name: updateProfileDto.name,
+            age: updateProfileDto.age,
+            description: updateProfileDto.description,
+            isMarried: updateProfileDto.isMarried,
+            // or
+            // id,
+            // ...updateProfileDto,
+        };
+    }
+
 
 }
