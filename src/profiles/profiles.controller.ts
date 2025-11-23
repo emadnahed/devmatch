@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query, Body, Put } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
@@ -47,11 +47,17 @@ export class ProfilesController {
             age: updateProfileDto.age,
             description: updateProfileDto.description,
             isMarried: updateProfileDto.isMarried,
+            code: HttpStatus.CREATED,
+            message: "Profile updated successfully"
             // or
             // id,
             // ...updateProfileDto,
         };
     }
 
-
+    @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    remove(@Param('id') id: string) {
+        return { id };
+    }
 }
