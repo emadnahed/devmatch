@@ -28,18 +28,13 @@ export class ProfilesController {
     // defining that the endpoint can take the param id, param is required
     // (baseUrl/profiles/1)
     findOne(@Param("id") id: string): any {
-        return { id };
+        return this.profilesService.findOne(id);
     }
 
 
     @Post()
     Create(@Body() createProfileDto: CreateProfileDto) {
-        return {
-            name: createProfileDto.name,
-            age: createProfileDto.age,
-            description: createProfileDto.description,
-            isMarried: createProfileDto.isMarried
-        };
+        return this.profilesService.createOne(createProfileDto);
     }
 
     @Put(':id')

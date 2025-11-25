@@ -3,4 +3,5 @@ export class CreateProfileDto {
     age: number;
     description: string;
     isMarried: boolean;
+    id: string;
 }
