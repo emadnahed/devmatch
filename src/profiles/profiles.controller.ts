@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Post, Query, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
-import { CreateProfileDto } from './dto/create-profile.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
+import { Controller, Get, Param, Body, Put, Delete, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import type { UUID } from '../common/types/uuid.type';
+import type { CreateProfileDto } from './dto/create-profile.dto';
+import type { UpdateProfileDto } from './dto/update-profile.dto';
 import { ProfilesService } from './profiles.service';
 
 @Controller('profiles')
@@ -27,7 +28,7 @@ export class ProfilesController {
     @Get("/:id")
     // defining that the endpoint can take the param id, param is required
     // (baseUrl/profiles/1)
-    findOne(@Param("id") id: string): any {
+    findOne(@Param("id") id: UUID): any {
         return this.profilesService.findOne(id);
     }
 
@@ -39,7 +40,7 @@ export class ProfilesController {
 
     @Put(':id')
     update(
-        @Param('id') id: string,
+        @Param('id') id: UUID,
         @Body() updateProfileDto: UpdateProfileDto,
     ) {
         return {
@@ -58,7 +59,7 @@ export class ProfilesController {
 
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    remove(@Param('id') id: string) {
+    remove(@Param('id') id: UUID) {
         return { id };
     }
 }

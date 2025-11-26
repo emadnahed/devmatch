@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateProfileDto } from './dto/create-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { UUID } from '../common/types/uuid.type';
 
 // the injectable decorator enables us to create an instance of the service created on this file and 
 // make it reusable elsewhere. No manual recreation needed as nest manages it for you through the
@@ -32,14 +34,37 @@ export class ProfilesService {
   findAll(): any[] {
     return this.profiles;
   }
-  findOne(id: string): any {
+  findOne(id: UUID): any {
     return this.profiles.find(profile => profile.id === id);
   }
 
   createOne(profile: CreateProfileDto) {
     const newProfile = { ...profile, id: randomUUID() };
     this.profiles.push(newProfile);
-    return newProfile;
+    return { success: true, profile: newProfile, message: 'Profile created successfully' };
   }
+
+  updateOne(id: UUID, updates: UpdateProfileDto) {
+    const index = this.profiles.findIndex(p => p.id === id);
+    if (index === -1) {
+        return null;
+    }
+    
+    // Create a new object with the updated fields
+    const updatedProfile = {
+        ...this.profiles[index],
+        ...updates,
+        id // Ensure the ID stays the same
+    };
+    
+    // Update the array
+    this.profiles[index] = updatedProfile;
+    
+    return { 
+        ...updatedProfile,
+        code: 200,
+        message: 'Profile updated successfully' 
+    };
+}
   
 }
