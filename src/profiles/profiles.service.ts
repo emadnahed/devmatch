@@ -66,5 +66,14 @@ export class ProfilesService {
         message: 'Profile updated successfully' 
     };
 }
+
+  deleteOne(id: UUID) {
+    const index = this.profiles.findIndex(p => p.id === id);
+    if (index === -1) {
+        return null;
+    }
+    this.profiles.splice(index, 1);
+    return { success: true, message: 'Profile deleted successfully' };
+}
   
 }

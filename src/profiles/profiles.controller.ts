@@ -43,23 +43,12 @@ export class ProfilesController {
         @Param('id') id: UUID,
         @Body() updateProfileDto: UpdateProfileDto,
     ) {
-        return {
-            id,
-            name: updateProfileDto.name,
-            age: updateProfileDto.age,
-            description: updateProfileDto.description,
-            isMarried: updateProfileDto.isMarried,
-            code: HttpStatus.CREATED,
-            message: "Profile updated successfully"
-            // or
-            // id,
-            // ...updateProfileDto,
-        };
+        return this.profilesService.updateOne(id, updateProfileDto);
     }
 
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
     remove(@Param('id') id: UUID) {
-        return { id };
+        return this.profilesService.deleteOne(id);
     }
 }
